@@ -1,0 +1,8 @@
+applications:
+- name: api2
+  command: node dist/server.js
+  buildpacks:
+    - https://github.com/cloudfoundry/nodejs-buildpack#v1.7.9
+  memory: 128M
+  env:
+    NODE_ENV: production

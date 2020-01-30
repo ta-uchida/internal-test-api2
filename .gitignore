@@ -102,3 +102,6 @@ public
 
 # build result
 dist
+
+# IntelliJ idea
+.idea
