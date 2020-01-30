@@ -1,0 +1,2 @@
+#src # if not upload src, it crashes. not sure why but leave it for now
+node_modules
