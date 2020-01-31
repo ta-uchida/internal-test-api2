@@ -1,11 +1,15 @@
 import * as Express from 'express';
+import errorHandler from "./middleware/errorHandler";
+import * as Boom from "@hapi/boom";
+import isRegulated from "./accessRegulation";
 
 require('dotenv').config();
 const app = Express();
 
 app.use((req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
-    console.log(`req.connection.remoteAddress: ${req.connection.remoteAddress}`);
-    console.log(`req.headers['x-forwarded-for']: ${req.headers['x-forwarded-for']}`);
+    if (isRegulated(req)) {
+      return next(Boom.notFound());
+    }
     next();
 });
 
@@ -23,6 +27,8 @@ app.get(
             data: { from: 'api2' }
         });
     });
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 app.listen(
